@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "rpc";
+
+service WxFetcher {
+    rpc FetchURL(FetchURLRequest) returns (FetchURLResponse) {}
+}
+
+message FetchURLRequest {
+    string originalUrl = 1;
+}
+
+message FetchURLResponse {
+    string shortenedKey = 1;
+}
