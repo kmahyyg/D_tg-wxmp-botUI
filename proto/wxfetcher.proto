@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option go_package = "proto";
+
+service WxFetcher {
+    rpc FetchURL(FetchURLRequest) returns (FetchURLResponse) {}
+}
+
+message FetchURLRequest {
+    string url = 1;
+}
+
+message FetchURLResponse {
+	string      key  = 1;
+	ArticleMeta meta = 2;
+}
+
+message ArticleMeta {
+    string link      = 1;
+	string title     = 2;
+	string author    = 3;
+	int64  timestamp = 4;
+	string image     = 5;
+	string brief     = 6;
+}

@@ -1,2 +1,2 @@
 proto:
-	python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. rpc/wxfetcher.proto
+	python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/wxfetcher.proto

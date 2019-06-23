@@ -2,11 +2,13 @@ from typing import List
 
 _storage = {}
 
+
 def get(*args: List[str]):
     current = _storage
     for key in args:
         current = current[key]
     return current
+
 
 def put(*args: List):
     assert(len(args) >= 2)
