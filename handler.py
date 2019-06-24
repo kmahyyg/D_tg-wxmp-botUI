@@ -12,7 +12,7 @@ from grpc import RpcError
 from proto.wxfetcher_pb2 import FetchURLRequest, FetchURLResponse, ArticleMeta, FetchURLError
 from proto.wxfetcher_pb2_grpc import WxFetcherStub
 from storage import get
-from typing import Tuple, List, Optional
+from typing import Tuple, Optional
 
 _REGEX_URL = re.compile(r"(?:http|https)://[\w-]+(?:\.[\w-]+)+(?:[\w.,;@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?", re.ASCII)
 
@@ -24,7 +24,11 @@ def wxmpbot_start_command_callback(bot: Bot, update: Update):
     msg = update.message  # type: Message
     args = msg.text.split()
     if "bielaiwuyang" in args:
-        msg.reply_text("嗨，别来无恙啊！")
+        msg.reply_text(
+            "嗨，别来无恙啊！\n"
+            "两年了！懒蛋 @mutong 终于把这个 bot 重写了，虽然没有任何新功能。\n"
+            "但是，现在整个程序是船新的架构✨代码顺眼多了那种（果然自己两年前写的全是烂代码）\n"
+            "当然了重构哪能不引入新 bug 呢对不对，如果遇到了什么问题想麻烦反馈一下的，感谢大家😘")
     if "chui" in args:
         msg.reply_text(
             "要锤 @mutong 吗？",
