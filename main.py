@@ -2,7 +2,7 @@ import grpc
 import json
 import signal
 import logging
-from datetime import datetime
+import time
 from argparse import ArgumentParser
 from telegram.ext import Updater as TelegramUpdater
 from proto import wxfetcher_pb2_grpc as proto
@@ -23,7 +23,7 @@ class LogFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord):
         log_str = "{} {}/ [{}] {}\n{}".format(
-            datetime.fromtimestamp(record.created).strftime("%Y-%m-%d %H:%M:%S %Z"),
+            time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime(record.created)),
             record.levelname[0],
             record.name,
             record.getMessage(),
