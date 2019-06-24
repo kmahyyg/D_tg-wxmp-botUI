@@ -75,6 +75,7 @@ def main():
     put("rpc", "channel", rpc_channel)
     put("rpc", "stub", rpc_stub)
     put("tg", "updater", tg_updater)
+    put("tg", "admin", cfg["telegram"]["admin"])
     put("prefix", "{}{}".format("https://" if cfg["web"].get("https") else "http://", cfg["web"]["host"]))
     # Set signal handling
     signal.signal(signal.SIGINT, signal_handler)
