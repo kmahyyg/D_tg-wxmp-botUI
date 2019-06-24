@@ -4,6 +4,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -20,9 +21,49 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=_b('Z\005proto'),
-  serialized_pb=_b('\n\x15proto/wxfetcher.proto\"\x1e\n\x0f\x46\x65tchURLRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\";\n\x10\x46\x65tchURLResponse\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x04meta\x18\x02 \x01(\x0b\x32\x0c.ArticleMeta\"k\n\x0b\x41rticleMeta\x12\x0c\n\x04link\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05image\x18\x05 \x01(\t\x12\r\n\x05\x62rief\x18\x06 \x01(\t2>\n\tWxFetcher\x12\x31\n\x08\x46\x65tchURL\x12\x10.FetchURLRequest\x1a\x11.FetchURLResponse\"\x00\x42\x07Z\x05protob\x06proto3')
+  serialized_pb=_b('\n\x15proto/wxfetcher.proto\"\x1e\n\x0f\x46\x65tchURLRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\"g\n\x10\x46\x65tchURLResponse\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x04meta\x18\x02 \x01(\x0b\x32\x0c.ArticleMeta\x12\x1d\n\x05\x65rror\x18\x03 \x01(\x0e\x32\x0e.FetchURLError\x12\x0b\n\x03msg\x18\x04 \x01(\t\"k\n\x0b\x41rticleMeta\x12\x0c\n\x04link\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05image\x18\x05 \x01(\t\x12\r\n\x05\x62rief\x18\x06 \x01(\t*N\n\rFetchURLError\x12\x06\n\x02OK\x10\x00\x12\x0f\n\x0bUNSUPPORTED\x10\x01\x12\x0b\n\x07NETWORK\x10\x02\x12\t\n\x05PARSE\x10\x03\x12\x0c\n\x08INTERNAL\x10\x04\x32>\n\tWxFetcher\x12\x31\n\x08\x46\x65tchURL\x12\x10.FetchURLRequest\x1a\x11.FetchURLResponse\"\x00\x42\x07Z\x05protob\x06proto3')
 )
 
+_FETCHURLERROR = _descriptor.EnumDescriptor(
+  name='FetchURLError',
+  full_name='FetchURLError',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='OK', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='UNSUPPORTED', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='NETWORK', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='PARSE', index=3, number=3,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='INTERNAL', index=4, number=4,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=271,
+  serialized_end=349,
+)
+_sym_db.RegisterEnumDescriptor(_FETCHURLERROR)
+
+FetchURLError = enum_type_wrapper.EnumTypeWrapper(_FETCHURLERROR)
+OK = 0
+UNSUPPORTED = 1
+NETWORK = 2
+PARSE = 3
+INTERNAL = 4
 
 
 
@@ -78,6 +119,20 @@ _FETCHURLRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='FetchURLResponse.error', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='msg', full_name='FetchURLResponse.msg', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -91,7 +146,7 @@ _FETCHURLRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=57,
-  serialized_end=116,
+  serialized_end=160,
 )
 
 
@@ -156,14 +211,16 @@ _ARTICLEMETA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=118,
-  serialized_end=225,
+  serialized_start=162,
+  serialized_end=269,
 )
 
 _FETCHURLRESPONSE.fields_by_name['meta'].message_type = _ARTICLEMETA
+_FETCHURLRESPONSE.fields_by_name['error'].enum_type = _FETCHURLERROR
 DESCRIPTOR.message_types_by_name['FetchURLRequest'] = _FETCHURLREQUEST
 DESCRIPTOR.message_types_by_name['FetchURLResponse'] = _FETCHURLRESPONSE
 DESCRIPTOR.message_types_by_name['ArticleMeta'] = _ARTICLEMETA
+DESCRIPTOR.enum_types_by_name['FetchURLError'] = _FETCHURLERROR
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 FetchURLRequest = _reflection.GeneratedProtocolMessageType('FetchURLRequest', (_message.Message,), dict(
@@ -196,8 +253,8 @@ _WXFETCHER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=227,
-  serialized_end=289,
+  serialized_start=351,
+  serialized_end=413,
   methods=[
   _descriptor.MethodDescriptor(
     name='FetchURL',

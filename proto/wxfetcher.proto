@@ -6,13 +6,23 @@ service WxFetcher {
     rpc FetchURL(FetchURLRequest) returns (FetchURLResponse) {}
 }
 
+enum FetchURLError {
+	OK = 0;
+	UNSUPPORTED = 1;
+	NETWORK = 2;
+	PARSE = 3;
+	INTERNAL = 4;
+}
+
 message FetchURLRequest {
     string url = 1;
 }
 
 message FetchURLResponse {
-	string      key  = 1;
-	ArticleMeta meta = 2;
+	string        key   = 1;
+	ArticleMeta   meta  = 2;
+	FetchURLError error = 3;
+	string        msg   = 4;
 }
 
 message ArticleMeta {
