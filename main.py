@@ -6,7 +6,12 @@ import time
 from argparse import ArgumentParser
 from telegram.ext import Updater as TelegramUpdater
 from proto import wxfetcher_pb2_grpc as proto
-from handler import wxmpbotStartCommandHandler, wxmpbotInlineQueryHandler
+from handler import (
+    wxmpbotStartCommandHandler,
+    wxmpbotInlineQueryHandler,
+    wxmpbotCallbackQueryHandler,
+    wxmpbotTextMessageHandler
+)
 from storage import get, put
 
 logger = logging.getLogger("Main")  # type: logging.Logger
@@ -67,7 +72,9 @@ def main():
     logger.info("Initializing Telegram bot...")
     tg_updater = TelegramUpdater(token=cfg["telegram"]["token"])
     tg_updater.dispatcher.add_handler(wxmpbotStartCommandHandler)
+    tg_updater.dispatcher.add_handler(wxmpbotTextMessageHandler)
     tg_updater.dispatcher.add_handler(wxmpbotInlineQueryHandler)
+    tg_updater.dispatcher.add_handler(wxmpbotCallbackQueryHandler)
     tg_updater.start_polling()
     # Get bot info
     bot_me = tg_updater.bot.get_me()
