@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import grpc
 import json
 import signal
