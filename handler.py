@@ -66,7 +66,7 @@ def wxmpbot_text_message_callback(bot: Bot, update: Update):
     if detail is not None:
         bot.send_message(
             get("tg", "admin"),
-            "Error in <pre>text_message_callback</pre>\nText:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
+            "Error in <code>text_message_callback</code>\n\nText:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
                 html.escape(msg.text), html.escape(detail)
             ), parse_mode="HTML"
         )
@@ -111,7 +111,7 @@ def wxmpbot_inline_query_callback(bot: Bot, update: Update):
     if detail is not None:
         bot.send_message(
             get("tg", "admin"),
-            "Error in <pre>inline_query_callback</pre>\nQuery:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
+            "Error in <code>inline_query_callback</code>\n\nQuery:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
                 html.escape(query.query), html.escape(detail)
             ), parse_mode="HTML"
         )
