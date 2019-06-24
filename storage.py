@@ -3,14 +3,14 @@ from typing import List
 _storage = {}
 
 
-def get(*args: List[str]):
+def get(*args):
     current = _storage
     for key in args:
         current = current[key]
     return current
 
 
-def put(*args: List):
+def put(*args):
     assert(len(args) >= 2)
     current = _storage
     for index in range(len(args) - 2):
