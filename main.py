@@ -67,10 +67,17 @@ def main():
     root_logger.addHandler(log_handler)
     for name, level in cfg["logging"].items():
         logging.getLogger(name).setLevel(level.upper())
-    # Initialize RPC and Telegram Bot
+    # Initialize RPC
     logger.info("Initializing RPC channel to %s", cfg["fetcher"]["remote"])
-    rpc_channel = grpc.insecure_channel(cfg["fetcher"]["remote"])
+    rpc_options = []
+    for key, value in cfg["fetcher"]["options"].items():
+        rpc_options.append((key, value))
+    rpc_channel = grpc.insecure_channel(
+        cfg["fetcher"]["remote"],
+        options=tuple(rpc_options)
+    )
     rpc_stub = proto.WxFetcherStub(rpc_channel)
+    # Initialize Telegram Bot
     logger.info("Initializing Telegram bot...")
     tg_updater = TelegramUpdater(token=cfg["telegram"]["token"])
     tg_updater.dispatcher.add_handler(wxmpbotStartCommandHandler)
