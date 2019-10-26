@@ -2,11 +2,11 @@ import re
 import html
 import logging
 import traceback
-from telegram import Bot, Update
-from telegram import Message, InlineQuery, CallbackQuery
+from telegram import Update, Message, InlineQuery, CallbackQuery
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CommandHandler, InlineQueryHandler, CallbackQueryHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, InlineQueryHandler, CallbackQueryHandler, MessageHandler, \
+    Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from grpc import RpcError
 from proto.wxfetcher_pb2 import FetchURLRequest, FetchURLResponse, ArticleMeta, FetchURLError
@@ -20,7 +20,7 @@ logger = logging.getLogger("Handler")
 
 
 @run_async
-def wxmpbot_start_command_callback(bot: Bot, update: Update):
+def wxmpbot_start_command_callback(update: Update, context: CallbackContext):
     msg = update.message  # type: Message
     args = msg.text.split()
     if "bielaiwuyang" in args:
@@ -39,10 +39,10 @@ def wxmpbot_start_command_callback(bot: Bot, update: Update):
 
 
 @run_async
-def wxmpbot_callback_query_callback(bot: Bot, update: Update):
+def wxmpbot_callback_query_callback(update: Update, context: CallbackContext):
     cb = update.callback_query  # type: CallbackQuery
     if cb.data == "chui":
-        bot.send_message(
+        context.bot.send_message(
             get("tg", "admin"), "<a href=\"tg://user?id={}\">{}</a> 来锤你了！".format(
                 cb.from_user.id, cb.from_user.full_name
             ), parse_mode="HTML"
@@ -51,7 +51,7 @@ def wxmpbot_callback_query_callback(bot: Bot, update: Update):
 
 
 @run_async
-def wxmpbot_text_message_callback(bot: Bot, update: Update):
+def wxmpbot_text_message_callback(update: Update, context: CallbackContext):
     msg = update.message  # type: Message
     try:
         if _REGEX_URL.fullmatch(msg.text):
@@ -64,15 +64,16 @@ def wxmpbot_text_message_callback(bot: Bot, update: Update):
         answer, detail = "出错了，快去锤 @mutong", traceback.format_exc()
     msg.reply_text(answer)
     if detail is not None:
-        bot.send_message(
+        context.bot.send_message(
             get("tg", "admin"),
             "Error in <code>text_message_callback</code>\n\nText:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
                 html.escape(msg.text), html.escape(detail)
             ), parse_mode="HTML"
         )
 
+
 @run_async
-def wxmpbot_inline_query_callback(bot: Bot, update: Update):
+def wxmpbot_inline_query_callback(update: Update, context: CallbackContext):
     query = update.inline_query  # type: InlineQuery
     try:
         if _REGEX_URL.fullmatch(query.query):
@@ -109,7 +110,7 @@ def wxmpbot_inline_query_callback(bot: Bot, update: Update):
     # Send bot answer
     query.answer(results=answer, switch_pm_text=notification, switch_pm_parameter=param, cache_time=10)
     if detail is not None:
-        bot.send_message(
+        context.bot.send_message(
             get("tg", "admin"),
             "Error in <code>inline_query_callback</code>\n\nQuery:\n<pre>{}</pre>\n\nError:\n<pre>{}</pre>".format(
                 html.escape(query.query), html.escape(detail)

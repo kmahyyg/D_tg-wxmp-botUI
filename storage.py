@@ -1,5 +1,3 @@
-from typing import List
-
 _storage = {}
 
 
@@ -11,7 +9,7 @@ def get(*args):
 
 
 def put(*args):
-    assert(len(args) >= 2)
+    assert (len(args) >= 2)
     current = _storage
     for index in range(len(args) - 2):
         key = args[index]

@@ -79,7 +79,7 @@ def main():
     rpc_stub = proto.WxFetcherStub(rpc_channel)
     # Initialize Telegram Bot
     logger.info("Initializing Telegram bot...")
-    tg_updater = TelegramUpdater(token=cfg["telegram"]["token"])
+    tg_updater = TelegramUpdater(token=cfg["telegram"]["token"], use_context=True)
     tg_updater.dispatcher.add_handler(wxmpbotStartCommandHandler)
     tg_updater.dispatcher.add_handler(wxmpbotTextMessageHandler)
     tg_updater.dispatcher.add_handler(wxmpbotInlineQueryHandler)
