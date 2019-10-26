@@ -1,0 +1,13 @@
+kind: pipeline
+type: exec
+name: default
+
+steps:
+- name: Build
+  commands:
+  - docker build -t registry.mutong.moe/wxmpbot .
+- name: Push
+  commands:
+  - docker push registry.mutong.moe/wxmpbot
+  environment:
+    DOCKER_CONFIG: /root/.docker
